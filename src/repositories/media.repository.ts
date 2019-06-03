@@ -87,6 +87,28 @@ export class MediaRepository extends Repository {
       ...options,
     });
   }
+  public async enableComments(id: string | number) {
+    const { body } = await this.client.request.send<MediaInfoResponseRootObject>({
+      url: `/api/v1/media/${id}/enable_comments/`,
+      method: 'POST',
+      form: this.client.request.sign({
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      }),
+    });
+    return body;
+  }
+  public async disableComments(id: string | number) {
+    const { body } = await this.client.request.send<MediaInfoResponseRootObject>({
+      url: `/api/v1/media/${id}/disable_comments/`,
+      method: 'POST',
+      form: this.client.request.sign({
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      }),
+    });
+    return body;
+  }
   public async comment({
     mediaId,
     text,
